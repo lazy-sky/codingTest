@@ -15,7 +15,7 @@
 function solution(numbers, target) {
   let answer = 0;
   function dfs(index, sum) {
-    if (index === number.length) {
+    if (index === numbers.length) {
       if (sum === target) {
         answer++;
       }
@@ -67,7 +67,7 @@ answer를 반환한다.
 function solution(numbers, target) {
   let answer = 0;
   function dfs(index, sum) {
-    if (index === number.length) {
+    if (index === numbers.length) {
       if (sum === target) {
         answer++;
       }
@@ -85,5 +85,6 @@ function solution(numbers, target) {
 }
 
 - 회고
+굳이 dfs 함수를 만들지 않는 쪽으로 리팩토링 할 수 있을 것으로 보인다.
 
 */

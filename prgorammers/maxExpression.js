@@ -39,32 +39,42 @@ function solution(expression) {
     ["*", "+", "-"],
     ["*", "-", "+"],
   ];
+
+  const operate = {
+    '+': (a, b) => a + b,
+    '-': (a, b) => a - b,
+    '*': (a, b) => a * b,
+  };
   
   const numbers = expression.split(/[*+-]/).map(x => Number(x));
-  
-  const operators = [
-        ...new Set(expression
-          .split(/\d+/)
-          .filter(x => x.length === 1))
-  ];
+  const operators = expression.match(/[\+\-\*]/g);
 
-  priorities.forEach((x, i) => {
-    const tempNumbers = numbers.slice();
-    const tempOperators = operators.slice();
+  for (const priority of priorities) {
+    const tempNumbers = [...numbers];
+    const tempOperators = [...operators];
+    let operatorIndex = 0;
 
-    priorities[i].forEach((y, j) => {
-      tempOperators.forEach((z, k) => {
-        if(priorities[i][j] === '+') {
+    while (tempNumbers.length > 1) {
+      for (let i = 0; i < tempOperators.length; i++) {
+          if (tempOperators[i] === priority[operatorIndex]) {
+              tempNumbers[i] = operate[tempOperators[i]](tempNumbers[i], tempNumbers[i + 1]);
 
-        }
-      })
-
+              tempNumbers.splice(i + 1, 1);
+              tempOperators.splice(i, 1);
+              i--;
+          }
+      }
       
-    })
-  })
-
+      operatorIndex++;
+    } 
+    
+    if (Math.abs(tempNumbers[0]) > answer) answer = Math.abs(tempNumbers[0]);
+  }
 
   return answer;
 }
 
 // 너무 많은 반복문, 계획 재고해보기
+
+// 우선순위 for문은 3번이라 무시해도 됨,
+// 따라서 시간복잡도는 n^2

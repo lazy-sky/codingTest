@@ -65,3 +65,5 @@ class QueueByLinkedList {
     return this.head.value;
   }
 }
+
+const a = 1;
